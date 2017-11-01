@@ -6,11 +6,11 @@
 #include <exception>
 #include <string>
 #include <iostream>
-
+#include <climits>
 using namespace std;
 
 #include "MurmurHash3.h"
-
+#include "containmenthash.cpp"
 
 uint64_t generate_hash(const string& kmer, const uint32_t seed) {
     uint64_t out[2];
@@ -110,12 +110,14 @@ public:
 
 int main() {
 
-    KminHash* temp1 = new KminHash(3, 4);
+    KminHash* temp1 = new KminHash(3, 17);
     temp1->generate_kmer("CATGGACCGACCAG");
 
-    KminHash* temp2 = new KminHash(3, 4);
+    KminHash* temp2 = new KminHash(3, 17);
     temp2->generate_kmer("GCAGTACCGATCGT");
 
     temp1->compare(temp2);
-
+    ContainmentHash* cmh = new ContainmentHash();
+    cmh->setvalues(3,100);
+    cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");
 }
