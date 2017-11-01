@@ -20,7 +20,7 @@ int main()
 {
     //cin>>largeString;
     BloomFilter *b = new BloomFilter(300000,p);
-    b->add("prashjanht");
+    b->add("testWord");
     b->printSetBits();
     //construct a bloom filter //
     
