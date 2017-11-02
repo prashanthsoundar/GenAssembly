@@ -20,6 +20,8 @@ class BloomFilter
         void add(string data);
         void printSetBits();
         bool possiblyContains(string data) const;
+        uint64_t getMBitsSize();
+        uint64_t getNumHashes();
         uint64_t hash(string data,uint64_t filterSize,int n) const;
         ~BloomFilter();
 

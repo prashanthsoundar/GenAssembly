@@ -52,6 +52,17 @@ void BloomFilter::add(string data){
     }
 }
 
+uint64_t BloomFilter::getMBitsSize()
+{
+    return m_bits.size();
+}
+
+uint64_t BloomFilter::getNumHashes()
+{
+    return numHashes;
+}
+
+
 bool BloomFilter::possiblyContains(string data) const {
     
     for (int n = 0; n < numHashes; n++) {

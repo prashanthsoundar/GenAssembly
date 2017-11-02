@@ -53,12 +53,12 @@ public:
         size = k;
         seed = 0;
         num_hash = h;
-
+        
         for (int i = 0; i < num_hash; i++) {
             sketch.push_back(ULONG_MAX);
         }
     }
-
+    
     // TODO: Check if its working fine
     static uint64_t xorShift64(uint64_t a) {
         a ^= (a << 21);
@@ -76,7 +76,7 @@ public:
         //state[0] = x;
         return x * 0x2545F4914F6CDD1D;
     }
-
+    
     void add_kmer(const std::string& kmer) {
         vector<uint64_t> kmer_array;
         uint64_t temp = generate_hash(kmer, seed);
@@ -84,7 +84,7 @@ public:
         if (sketch[0] > temp) {
             sketch[0] = temp;
         }
-
+        
         for (int i = 1; i < num_hash; i++) {
             temp = xorshift64star(kmer_array[i-1]);
             kmer_array.push_back(temp);
@@ -94,14 +94,14 @@ public:
         }
         m[kmer] = kmer_array;
     }
-
+    
     void generate_kmer(const string s) {
         for (int i = 0; i <= s.length() - size; i++) {
             const string sub_string = s.substr(i, size);
             add_kmer(sub_string);
         }
     }
-
+    
     void compare(KminHash* other) {
         cout << "Sketch1" << endl;
         for (int i = 0; i < num_hash; i++) {
@@ -119,15 +119,15 @@ public:
 
 
 int main() {
-
+    
     KminHash* temp1 = new KminHash(3, 17);
-    temp1->generate_kmer("CATGGACCGACCAG");
-
+    temp1->generate_kmer("ATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAGCATGGACCGACCAG");
+    
     KminHash* temp2 = new KminHash(3, 17);
     temp2->generate_kmer("GCAGTACCGATCGT");
-
+    
     temp1->compare(temp2);
     /*ContainmentHash* cmh = new ContainmentHash();
-    cmh->setvalues(3,100);
-    cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");*/
+     cmh->setvalues(3,100);
+     cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");*/
 }
