@@ -6,7 +6,11 @@
 #include "ntHashIterator.hpp"
 using namespace std;
 class ContainmentHash{
-	
+	void printhashes(const size_t hashes[]){
+		for(size_t i = 0; i <100;i++){
+			cout<<"---"<<hashes[i]%1000<<endl;
+		}
+	}
 	int kmer_size;
 	int number_of_hashes;
 public:
@@ -30,14 +34,13 @@ public:
 			++itr;
 		}
 	
-//		bloom.insert("ddd");
-//		bloom.storeFilter("filter.bf");	
-//		BloomFilter bloom("filter.bf");
-		ntHashIterator itr1(se1,number_of_hashes, kmer_size);
+		ntHashIterator kmerhashes(se1,number_of_hashes,kmer_size);	
 		int count = 0;
-		while (itr1 != itr1.end()) {
+		while (kmerhashes != kmerhashes.end()) {
 			cout<<bloom.contains(*itr1)<<endl;
-			if(bloom.contains(*itr1)){
+			printhashes(*kmerhashes);
+						
+			if(bloom.contains(*kmerhashes)){
 				count++;
 			}
 			++itr1;
