@@ -154,18 +154,18 @@ static const uint64_t seedTab[256] = {
 };
 
 /*// assembly rol
-inline uint64_t rol (uint64_t v, size_t n)
-{
-    asm("rol %b1, %0":"+r,r"(v):"i,c"(n));
-    return (v);
-}
-
-// assembly ror
-inline uint64_t ror (uint64_t v, size_t n)
-{
-    asm("ror %b1, %0":"+r,r"(v):"i,c"(n));
-    return (v);
-}*/
+ inline uint64_t rol (uint64_t v, size_t n)
+ {
+ asm("rol %b1, %0":"+r,r"(v):"i,c"(n));
+ return (v);
+ }
+ 
+ // assembly ror
+ inline uint64_t ror (uint64_t v, size_t n)
+ {
+ asm("ror %b1, %0":"+r,r"(v):"i,c"(n));
+ return (v);
+ }*/
 
 // rotate "v" to the left by "s" positions
 inline uint64_t rol(const uint64_t v, const int s) {
@@ -245,7 +245,7 @@ inline uint64_t NTC64(const char * kmerSeq, const unsigned k, const unsigned see
 
 /*
  * Using pre-computed seed matrix msTab instead of rotate opts
-*/
+ */
 
 // ntHash
 inline uint64_t NTP64(const char * kmerSeq, const unsigned k) {
@@ -375,7 +375,7 @@ inline void NTMC64(const unsigned char charOut, const unsigned char charIn, cons
 
 /*
  * ignoring k-mers containing nonACGT using ntHash function
-*/
+ */
 
 // canonical ntBase
 inline bool NTPC64(const char *kmerSeq, const unsigned k, uint64_t& hVal, unsigned& locN) {
