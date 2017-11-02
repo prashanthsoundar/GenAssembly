@@ -10,7 +10,7 @@
 using namespace std;
 
 #include "MurmurHash3.h"
-#include "containmenthash.cpp"
+//#include "containmenthash.cpp"
 
 uint64_t generate_hash(const string& kmer, const uint32_t seed) {
     uint64_t out[2];
@@ -66,6 +66,16 @@ public:
         a ^= (a << 4);
         return a;
     }
+    
+    //Ref : https://en.wikipedia.org/wiki/Xorshift
+    uint64_t xorshift64star(uint64_t x) {
+        //uint64_t x = state[0];
+        x ^= x >> 12; // a
+        x ^= x << 25; // b
+        x ^= x >> 27; // c
+        //state[0] = x;
+        return x * 0x2545F4914F6CDD1D;
+    }
 
     void add_kmer(const std::string& kmer) {
         vector<uint64_t> kmer_array;
@@ -76,7 +86,7 @@ public:
         }
 
         for (int i = 1; i < num_hash; i++) {
-            temp = xorShift64(kmer_array[i-1]);
+            temp = xorshift64star(kmer_array[i-1]);
             kmer_array.push_back(temp);
             if (sketch[i] > temp) {
                 sketch[i] = temp;
@@ -117,7 +127,7 @@ int main() {
     temp2->generate_kmer("GCAGTACCGATCGT");
 
     temp1->compare(temp2);
-    ContainmentHash* cmh = new ContainmentHash();
+   /* ContainmentHash* cmh = new ContainmentHash();
     cmh->setvalues(3,100);
-    cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");
+    cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");*/
 }
