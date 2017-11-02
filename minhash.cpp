@@ -127,7 +127,7 @@ int main() {
     temp2->generate_kmer("GCAGTACCGATCGT");
 
     temp1->compare(temp2);
-    ContainmentHash* cmh = new ContainmentHash();
+    /*ContainmentHash* cmh = new ContainmentHash();
     cmh->setvalues(3,100);
-    cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");
+    cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");*/
 }
