@@ -10,7 +10,7 @@
 using namespace std;
 
 #include "MurmurHash3.h"
-//#include "containmenthash.cpp"
+#include "containmenthash.cpp"
 
 uint64_t generate_hash(const string& kmer, const uint32_t seed) {
     uint64_t out[2];
@@ -127,7 +127,7 @@ int main() {
     temp2->generate_kmer("GCAGTACCGATCGT");
 
     temp1->compare(temp2);
-   /* ContainmentHash* cmh = new ContainmentHash();
+    ContainmentHash* cmh = new ContainmentHash();
     cmh->setvalues(3,100);
-    cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");*/
+    cmh->calculatesimilarity("CATGGACCGACCAG","GCAGTACCGATCGT");
 }
