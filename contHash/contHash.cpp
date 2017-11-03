@@ -27,7 +27,7 @@ int main()
     
     vector<string> kmers = m->computeHashedKmers(s,kSize);
     
-    //This needs to change.. count unique K-MERS only
+    //This needs to change.. count unique K-MERS only..
     uint64_t sizeSmallStr=s.length()-kSize;
     
     //cout<<sizeSmallStr<<endl;
