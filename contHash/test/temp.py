@@ -4,9 +4,9 @@ import numpy as np
 
 # Define variables
 prime = 9999999999971  # taking hashes mod this prime
-ksize = 11  # k-mer length
-h = 10  # number of hashes to use
-p = 0.01  # false positive rate for the bloom filter
+ksize = 15  # k-mer length
+h = 2  # number of hashes to use
+p = 0.001  # false positive rate for the bloom filter
 len_small_string = 445
 len_large_string = 5432
 
@@ -23,16 +23,23 @@ A_MH.add_sequence(small_string)  # create the min hash of the small string
 
 # Create the bloom filter and populate with the larger set
 B_filt = BloomFilter(capacity=1.15*len_large_string, error_rate=p)  # Initialize the bloom filter
+#print repr(B_filt)
 size_B_est = 0  # used to count the number of k-mers in B, could do much more intelligently (like with HyperLogLog)
 print large_string
 print
 print small_string
 for i in range(len(large_string) - ksize + 1):
-	kmer = large_string[i:i+ksize]
-	if kmer not in B_filt:
-		size_B_est += 1
+    #print i
+    kmer = large_string[i:i+ksize]
+    if kmer not in B_filt:
+        size_B_est += 1
 #         print kmer
-        B_filt.add(kmer)
+        if B_filt.add(kmer):
+            print "ha"
+
+print "a"
+print len(large_string) - ksize + 1
+
 
 print size_B_est
 
@@ -57,7 +64,12 @@ print jaccard_est;
 A = set([small_string[i:i+ksize] for i in range(len(small_string) - ksize + 1)])  # the smaller set
 B = set([large_string[i:i+ksize] for i in range(len(large_string) - ksize + 1)])  # the larger set
 size_A = len(A)  # number of k-mers in A
-size_B = len(B)  # number of k-mers in B
+size_B = len(B)
+print size_A,size_B# number of k-mers in B
+print "__"
+print len(A.intersection(B))
+print len(A.union(B))
+
 true_jaccard = len(A.intersection(B)) / float(len(A.union(B)))
 
 print("Containment index estimate: %f" % containment_est)
