@@ -61,29 +61,6 @@ float jaccardIndex(string a,string b)
     
 }
 
-float jaccardindex( vector<uint64_t> &v1, vector<uint64_t> &v2)
-{
-    
-    vector<uint64_t> v3;
-    vector<uint64_t> v4;
-    int sizeintersection;
-    int sizeunion;
-    
-    sort(v1.begin(), v1.end());
-    sort(v2.begin(), v2.end());
-    
-    set_intersection(v1.begin(),v1.end(),v2.begin(),v2.end(),back_inserter(v3));
-    std::set_union (v1.begin(),v1.end(),v2.begin(),v2.end(), back_inserter(v4));
-    sizeintersection = v3.size();
-    sizeunion = v4.size();
-    
-    float ji = ((float)sizeintersection) / sizeunion;
-    
-    return ji;
-    
-}
-
-
 int main()
 {
     BloomFilter *b = new BloomFilter(1.15*l.length(),p);
