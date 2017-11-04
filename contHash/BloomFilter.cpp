@@ -35,8 +35,11 @@ void BloomFilter::initBloom(uint64_t capacity,double errorRate)
     double part1 = filterSize/capacity;
     numHashes = (uint64_t) ceil(part1*log(2));
     this->numHashes = numHashes;
-    
-    cout<<"arraySize: "<<this->m_bits.size()<<"bits numHashes: "<<this->numHashes<<endl;
+    cout<<"BLOOM_FILTER_INIT-------------------\n";
+    cout<<"Optimal ArraySize\t: "<<this->m_bits.size()<<"bits"<<endl;
+    cout<<"Optimal NumHashes\t: "<<this->numHashes<<endl;
+    cout<<"Permissible Error Rate\t: "<<this->errorRate<<endl;
+    cout<<"------------------------------------"<<endl;
 }
 
 uint64_t BloomFilter::hash(string data,uint64_t filterSize,int n) const{
@@ -47,7 +50,7 @@ uint64_t BloomFilter::hash(string data,uint64_t filterSize,int n) const{
 
 void BloomFilter::add(string data){
     
-    for (int n = 0; n < numHashes; n++) {
+    for (int n = 1; n <= numHashes; n++) {
         m_bits[hash(data,m_bits.size(),n)] = true;
     }
 }
@@ -65,7 +68,7 @@ uint64_t BloomFilter::getNumHashes()
 
 bool BloomFilter::possiblyContains(string data) const {
     
-    for (int n = 0; n < numHashes; n++) {
+    for (int n = 1; n <= numHashes; n++) {
         if (!m_bits[hash(data,m_bits.size(),n)]) {
             return false;
         }
