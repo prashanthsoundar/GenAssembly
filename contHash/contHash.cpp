@@ -13,7 +13,7 @@ using namespace std;
 
 //vars for minHash count estimator
 uint64_t prime = 9999999999971UL;
-uint64_t kSize = 15;
+uint64_t kSize = 20;
 uint64_t h = 100;
 double p = 0.001;
 string l,s,line;
@@ -57,8 +57,15 @@ float jaccardIndex(string a,string b)
     return ji;
     
 }
-
-int main()
+/*int main(){
+	int number_of_hashes[] = {1,5,10,100,1000,1100,1200,1500,2000,2500};
+	int kmer_size = 20;
+	for(int i:number_of_hashes){
+		h = i;
+		containHash();	
+	}
+}*/
+int containHash()
 {
     	ifstream input("input.txt");
         while( std::getline( input, line ) ){
@@ -74,6 +81,7 @@ int main()
                         }   
                 }   
         }   
+    cout<<"############"<<1.15*l.length()<<endl;
     BloomFilter *b = new BloomFilter(1.15*l.length(),p);
     MinhashNaive *m = new MinhashNaive(h,9999999999971UL);
     vector<string> kmers = m->computeHashedKmers(s,kSize); 
@@ -99,6 +107,8 @@ int main()
         }
     }
     
+    cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
+    cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
     cout<<"K-Mer Size\t\t: "<<kSize<<endl;
     cout<<"Hash Count\t\t: "<<h<<endl;
     intersectionCount-=(uint64_t)floor(p*h);
@@ -114,5 +124,15 @@ int main()
     float relError = abs(jaccardEst-trueJaccard)/trueJaccard;
     cout<<"Relative Error\t\t: "<<setprecision(6)<<relError<<endl;
     cout<<"------------------------------------"<<endl;
+    ofstream in("output.csv");
+    	 
     return 0;
+}
+int main(){
+        int number_of_hashes[] = {100,150,200,250,300,400,500,6000,700,800,900,1000,1100,1200,1300,1550,1600,1700,1800,1900,2000,2100,2200,2300,2400,2500};
+        int kmer_size = 20; 
+        for(int i:number_of_hashes){
+                h = i;
+                containHash();  
+        }   
 }
