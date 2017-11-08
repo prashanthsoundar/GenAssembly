@@ -88,7 +88,7 @@ float jaccardindex( vector<uint64_t> &v1, vector<uint64_t> &v2)
   }*/
 int containHash()
 {
-	ifstream input("input.txt");
+/*	ifstream input("input.txt");
 	while( std::getline( input, line ) ){
 		if( line.empty() || line[0] == '>' ){
 			continue;
@@ -102,7 +102,7 @@ int containHash()
 			}   
 		}   
 	}   
-
+*/
 	BloomFilter *b = new BloomFilter(1.15*l.length(),p);
 	MinhashNaive *m1 = new MinhashNaive(h,9999999999971UL);
 	vector<string> kmers = m1->computeHashedKmers(s,kSize); 
