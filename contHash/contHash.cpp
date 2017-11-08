@@ -81,7 +81,6 @@ int containHash()
                         }   
                 }   
         }   
-    cout<<"############"<<1.15*l.length()<<endl;
     BloomFilter *b = new BloomFilter(1.15*l.length(),p);
     MinhashNaive *m = new MinhashNaive(h,9999999999971UL);
     vector<string> kmers = m->computeHashedKmers(s,kSize); 
@@ -124,15 +123,15 @@ int containHash()
     float relError = abs(jaccardEst-trueJaccard)/trueJaccard;
     cout<<"Relative Error\t\t: "<<setprecision(6)<<relError<<endl;
     cout<<"------------------------------------"<<endl;
-    ofstream in("output.csv");
+//    ofstream in("output.csv");
     	 
     return 0;
 }
 int main(){
-        int number_of_hashes[] = {100,150,200,250,300,400,500,6000,700,800,900,1000,1100,1200,1300,1550,1600,1700,1800,1900,2000,2100,2200,2300,2400,2500};
-        int kmer_size = 20; 
-        for(int i:number_of_hashes){
-                h = i;
+//        int number_of_hashes[] = {100,150,200,250,300,400,500,6000,700,800,900,1000,1100,1200,1300,1550,1600,1700,1800,1900,2000,2100,2200,2300,2400,2500};
+  //      int kmer_size = 20; 
+    //    for(int i:number_of_hashes){
+      //          h = i;
                 containHash();  
-        }   
+        //}   
 }
