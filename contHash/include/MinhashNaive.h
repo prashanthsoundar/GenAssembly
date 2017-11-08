@@ -19,7 +19,8 @@ class MinhashNaive
     public:
         MinhashNaive(uint64_t numHashes,uint64_t largeMod);
         vector<string> computeHashedKmers(string s,uint64_t kmerSize);
-        uint64_t hash(string data,int n) const;
+        vector<uint64_t> getSketch();
+	uint64_t hash(string data,int n) const;
         ~MinhashNaive();
     
     

@@ -38,3 +38,7 @@ vector<string> MinhashNaive::computeHashedKmers(string s,uint64_t kmerSize)
     return sketchStr;
     
 }
+vector<uint64_t> MinhashNaive::getSketch()
+{
+    return sketch;
+}
