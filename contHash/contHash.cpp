@@ -134,8 +134,8 @@ int containHash()
 		}
 	}
 
-	//	cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
-	//	cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
+		cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
+		cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
 	//	cout<<"K-Mer Size\t\t: "<<kSize<<endl;
 	//	cout<<"Hash Count\t\t: "<<h<<endl;
 	intersectionCount-=(uint64_t)floor(p*h);
