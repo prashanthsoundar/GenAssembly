@@ -14,7 +14,7 @@ using namespace std;
 //vars for minHash count estimator
 uint64_t prime = 9999999999971UL;
 uint64_t kSize = 20;
-uint64_t h = 100;
+uint64_t h = 200;
 double p = 0.001;
 string l,s,line;
 float jaccardIndex(string a,string b)
@@ -88,21 +88,21 @@ float jaccardindex( vector<uint64_t> &v1, vector<uint64_t> &v2)
   }*/
 int containHash()
 {
-/*	ifstream input("input.txt");
-	while( std::getline( input, line ) ){
+	/*	ifstream input("input.txt");
+		while( std::getline( input, line ) ){
 		if( line.empty() || line[0] == '>' ){
-			continue;
+		continue;
 		}   
 		else{
-			if(l.empty()){
-				l = line;
-			}   
-			else{
-				s = line;
-			}   
+		if(l.empty()){
+		l = line;
 		}   
-	}   
-*/
+		else{
+		s = line;
+		}   
+		}   
+		}   
+	 */
 	BloomFilter *b = new BloomFilter(1.15*l.length(),p);
 	MinhashNaive *m1 = new MinhashNaive(h,9999999999971UL);
 	vector<string> kmers = m1->computeHashedKmers(s,kSize); 
@@ -134,15 +134,15 @@ int containHash()
 		}
 	}
 
-//	cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
-//	cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
-//	cout<<"K-Mer Size\t\t: "<<kSize<<endl;
-//	cout<<"Hash Count\t\t: "<<h<<endl;
+	//	cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
+	//	cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
+	//	cout<<"K-Mer Size\t\t: "<<kSize<<endl;
+	//	cout<<"Hash Count\t\t: "<<h<<endl;
 	intersectionCount-=(uint64_t)floor(p*h);
-//	cout<<"Intersection Est.\t: "<<intersectionCount<<endl;
+	//	cout<<"Intersection Est.\t: "<<intersectionCount<<endl;
 
 	float containmentEst=intersectionCount/float(h);
-//	cout<<"Containment Est.\t: "<<containmentEst<<endl;
+	//	cout<<"Containment Est.\t: "<<containmentEst<<endl;
 
 	float jaccardEst = (sizeSmallStr * containmentEst) / (sizeSmallStr + bSize - sizeSmallStr * containmentEst);
 	cout<<"Jaccard Est. by containmentHash: "<<jaccardEst<<endl;
@@ -155,8 +155,11 @@ int containHash()
 
 	return 0;
 }
-int main(){
-//	string l,s,line;
+int main(int argc,char* argv[]){
+	if(argc>1){
+		kSize = atoi(argv[1]);
+		h = atoi(argv[2]);
+	}
 	ifstream input("input.txt"); 
 	while( std::getline( input, line ) ){
 		if( line.empty() || line[0] == '>' ){
@@ -171,20 +174,13 @@ int main(){
 			}   
 		}   
 	}   
-	uint64_t hb[]= {1,5,10,50,100,200,300,400,500,600,700,800,900};
-	for(int i = 0 ; i<13;i++){
-		//Calculating Minhash
-		MinhashNaive *m1 = new MinhashNaive(hb[i],9999999999971UL);
-		m1->computeHashedKmers(l,20);
-		vector<uint64_t> sk1 = m1->getSketch();
-		MinhashNaive *m2 = new MinhashNaive(hb[i],9999999999971UL);
-		m2->computeHashedKmers(s,20); 
-		vector<uint64_t> sk2 = m2->getSketch();
-		cout <<"Number of Hash Values: "<< hb[i]<<endl<<"Minhash similarity: "<<::jaccardindex(sk1,sk2)<<endl;
-		h = hb[i];
-		kSize = 20;		
-		//Calculating Containment hash;
-		containHash();
-	}
+	MinhashNaive *m1 = new MinhashNaive(h,9999999999971UL);
+	m1->computeHashedKmers(l,kSize);
+	vector<uint64_t> sk1 = m1->getSketch();
+	MinhashNaive *m2 = new MinhashNaive(h,9999999999971UL);
+	m2->computeHashedKmers(s,kSize); 
+	vector<uint64_t> sk2 = m2->getSketch();
+	cout<<"KmerSize: "<<kSize<<endl<<"Number of Hash Values: "<<h<<endl<<"Minhash similarity: "<<::jaccardindex(sk1,sk2)<<endl;
+	containHash();
 
 }
