@@ -18,7 +18,7 @@ MinhashNaive::MinhashNaive(uint64_t numHashes,uint64_t largeMod)
 
 uint64_t MinhashNaive::hash(string data,int n) const{
     uint64_t hashVal[2];
-    MurmurHash3_x64_128(data.c_str(), data.length(), 0, &hashVal);
+    MurmurHash3_x64_128(data.c_str(), data.length(),n, &hashVal);
     return (hashVal[0] + n * hashVal[1]) % largeMod;
 }
 
