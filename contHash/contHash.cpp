@@ -2,6 +2,8 @@
 #include "include/BloomFilter.h"
 #include "include/MinhashNaive.h"
 #include<math.h>
+#include<set>
+#include <fstream>
 #include<string>
 #include<iomanip>
 #include<set>
@@ -11,18 +13,15 @@
 typedef unsigned long long int uint64_t;
 using namespace std;
 
-ofstream myfile;
-
-float trueJaccard;
-
-
-
 //vars for minHash count estimator
 uint64_t prime = 9999999999971UL;
 uint64_t kSize = 20;
-uint64_t h = 1000;
-double p = 0.01;
+uint64_t h = 200;
+uint64_t str_len;
+double p = 0.001;
+vector <string> genomes;
 string l,s,line;
+string file_input;
 float jaccardIndex(string a,string b)
 {
 	set<string> s1;
@@ -94,30 +93,9 @@ float jaccardindex( vector<uint64_t> &v1, vector<uint64_t> &v2)
   }*/
 int containHash()
 {
-	/*	ifstream input("input.txt");
-		while( std::getline( input, line ) ){
-		if( line.empty() || line[0] == '>' ){
-		continue;
-		}   
-		else{
-		if(l.empty()){
-		l = line;
-		}   
-		else{
-		s = line;
-		}   
-		}   
-		}   
-	 */
 	BloomFilter *b = new BloomFilter(1.15*l.length(),p);
 	MinhashNaive *m1 = new MinhashNaive(h,9999999999971UL);
-	vector<string> kmers = m1->computeHashedKmers(s,kSize); 
-	//vector<uint64_t> sk1 = m1->getSketch();
-	// MinhashNaive *m2 = new MinhashNaive(h,9999999999971UL);
-	// vector<string> kmers2 = m2->computeHashedKmers(s,kSize);
-	//vector<uint64_t> sk2 = m2->getSketch();
-	//    cout<<"======"<<sk1<<endl<<sk2<<endl;
-	//for(int y=0;y<sk1.size();y++)
+	vector<string> kmers = m1->computeHashedKmers(s,kSize);
 	set<string> temp;
 	for(int i =0;i<s.length()-kSize+1;i++){
 		temp.insert(s.substr(i,kSize));
@@ -140,114 +118,71 @@ int containHash()
 		}
 	}
 
-		//cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
-		//cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
-	//	cout<<"K-Mer Size\t\t: "<<kSize<<endl;
-	//	cout<<"Hash Count\t\t: "<<h<<endl;
+    cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
+    cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
 	intersectionCount-=(uint64_t)floor(p*h);
-	//	cout<<"Intersection Est.\t: "<<intersectionCount<<endl;
-
 	float containmentEst=intersectionCount/float(h);
-	//	cout<<"Containment Est.\t: "<<containmentEst<<endl;
 
 	float jaccardEst = (sizeSmallStr * containmentEst) / (sizeSmallStr + bSize - sizeSmallStr * containmentEst);
-    //float trueJaccard = jaccardIndex(l,s);
-//    cout<<jaccardEst<<" "<<trueJaccard<<endl;
-//
-//    cout<<"Actual Jaccard Est.: "<<trueJaccard<<endl;
-    float relError = abs(jaccardEst-trueJaccard)/trueJaccard;
-    myfile<<" "<<setprecision(6)<<relError<<endl;
-//    //cout<<"------------------------------------"<<endl;
-	//    ofstream in("output.csv");
-
+	cout<<"Jaccard Est. by containmentHash: "<<jaccardEst<<endl;
+	float trueJaccard = jaccardIndex(l,s);
+	cout<<"Actual Jaccard Est.: "<<trueJaccard<<endl;
+	float relError = abs(jaccardEst-trueJaccard)/trueJaccard;
+	cout<<"Relative Error of containment hash: "<<setprecision(6)<<relError<<endl;
+	cout<<"------------------------------------"<<endl;
 	return 0;
 }
+void buildandStoreBF(){
+    BloomFilter *b = new BloomFilter(1.15*str_len,p);
+//    cout<<genomes.size()<<endl;
+    set<string> temp;
+    for(int k=0;k<genomes.size();k++){
+        string g = genomes.at(k);
+        for(int i=0;i<g.length()-kSize+1;i++){
+            b->add(g.substr(i,kSize));
+            temp.insert(g.substr(i,kSize));
+        }
+    }
+    b->setBSize(temp.size());
+ //   cout<<"Bits Size:"<<b->getMBitsSize()<<endl;
+//    cout<<"Number of hashes"<<b->getNumHashes()<<endl;
+    ofstream file_obj;
+    file_obj.open("bloom.obj", ios::binary);
+    file_obj.write((char *)b, sizeof(BloomFilter));
+    cout<<"Bloom Filter object saved on disk"<<endl;
+}
 int main(int argc,char* argv[]){
-    
-    myfile.open ("example.txt");
-    
-    //    if(argc>1){
-    //        kSize = atoi(argv[1]);
-    //        h = atoi(argv[2]);
-    //    }
-    //    ifstream input("input.txt");
-    //    while( std::getline( input, line ) ){
-    //        if( line.empty() || line[0] == '>' ){
-    //            continue;
-    //        }
-    //        else{
-    //            if(l.empty()){
-    //                l = line;
-    //            }
-    //            else{
-    //                s = line;
-    //            }
-    //        }
-    //    }
-    
-    //cin>>l>>s;
-    char c[]={'A','C','T','G'};
-    
-    string t;
-    l=s=t="";
-    int k = 50;
-    
-    int j=0;
-    
-    l=s=t="";
-    
-    for(int i=0;i<10000;i++)
-    {
-        l+=c[rand()%4];
+    std::time_t result = std::time(nullptr);
+	if(argc>1){
+		kSize = atoi(argv[1]);
+		h = atoi(argv[2]);
+        file_input = argv[3];
     }
-    for(int i=0;i<10000;i++)
-    {
-        s+=c[rand()%4];
+	ifstream input(file_input);
+    if(!input.is_open()){
+        cout<<"File name not correct. Exiting"<<endl;
+        return 0;
     }
-    
-    for(int i=0;i<k;i++)
-    {
-        t+=c[rand()%4];
-    }
-    l+=s;
-    l+=t;
-    s+=t;
-    
-    trueJaccard = jaccardIndex(l,s);
-   
-    
-    while(j<100000)
-    {
-        
-        cout<<j<<endl;
-        MinhashNaive *m1 = new MinhashNaive(h,9999999999971UL);
-        m1->computeHashedKmers(l,kSize);
-        vector<uint64_t> sk1 = m1->getSketch();
-        MinhashNaive *m2 = new MinhashNaive(h,9999999999971UL);
-        m2->computeHashedKmers(s,kSize);
-        vector<uint64_t> sk2 = m2->getSketch();
-        //cout<<"KmerSize: "<<kSize<<endl<<"Number of Hash Values: "<<h<<endl<<"Minhash similarity: "<<::jaccardindex(sk1,sk2)<<endl;
-        
-        //cout<<jaccardindex(sk1,sk2)<<" ";
-        
-        float jaccardEst = jaccardindex(sk1,sk2);
-        
-        //    cout<<jaccardEst<<" "<<trueJaccard<<endl;
-        //
-        //    cout<<"Actual Jaccard Est.: "<<trueJaccard<<endl;
-        float relError = abs(jaccardEst-trueJaccard)/trueJaccard;
-        myfile<<h<<" "<<setprecision(6)<<relError;
-        
-        containHash();
-        
-        if(j%1==0)h+=1;
-        
-        j+=1;
-        
-    }
-    
-    //    cout<<l<<endl;
-    //    cout<<s<<endl;
-    //
+    string f_l;
+    int q = 0;
+	while( std::getline( input, line ) ){
+		if(q == 0){
+            q=1;
+            continue;
+        }
+        if( line.empty() || line[0] == '>' ){
+			genomes.push_back(f_l);
+            str_len+=f_l.size();
+            f_l = "";
+		}
+		else{
+            f_l+=line;
+		}
+	}
+    genomes.push_back(f_l);
+    str_len+=f_l.size();
+    buildandStoreBF();
+    std::time_t r2 = std::time(nullptr);
+    cout<<str_len<<"  "<<r2-result<<endl;
 
 }

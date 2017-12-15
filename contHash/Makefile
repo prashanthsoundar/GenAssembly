@@ -1,7 +1,10 @@
-
 ContainmentHash: contHash.o BloomFilter.o MurmurHash3.o MinhashNaive.o
-	g++ -g -std=c++0x contHash.o BloomFilter.o MurmurHash3.o MinhashNaive.o -o containmentHash
+	g++ -std=c++0x contHash.o BloomFilter.o MurmurHash3.o MinhashNaive.o -o containmentHash
+query: query.o BloomFilter.o MinhashNaive.o MurmurHash3.o
+	g++ -std=c++0x query.o BloomFilter.o MinhashNaive.o MurmurHash3.o -o query
 
+query.o: query.cpp
+	g++ -std=c++0x -c query.cpp
 contHash.o: contHash.cpp
 	g++ -std=c++0x -c contHash.cpp
 
@@ -16,3 +19,4 @@ MurmurHash3.o: MurmurHash3.cpp include/MurmurHash3.h
 
 clean:
 	rm *.o containmentHash
+	rm query

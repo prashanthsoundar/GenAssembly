@@ -12,11 +12,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cff486d7-d4bc-4829-89eb-d48d76f2621f" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/contHash/BloomFilter.cpp" afterPath="$PROJECT_DIR$/contHash/BloomFilter.cpp" />
+      <change beforePath="$PROJECT_DIR$/contHash/BloomFilter.o" afterPath="$PROJECT_DIR$/contHash/BloomFilter.o" />
       <change beforePath="$PROJECT_DIR$/contHash/Makefile" afterPath="$PROJECT_DIR$/contHash/Makefile" />
-      <change beforePath="$PROJECT_DIR$/contHash/MinhashNaive.cpp" afterPath="$PROJECT_DIR$/contHash/MinhashNaive.cpp" />
+      <change beforePath="$PROJECT_DIR$/contHash/MinhashNaive.o" afterPath="$PROJECT_DIR$/contHash/MinhashNaive.o" />
       <change beforePath="$PROJECT_DIR$/contHash/contHash.cpp" afterPath="$PROJECT_DIR$/contHash/contHash.cpp" />
-      <change beforePath="$PROJECT_DIR$/contHash/output.csv" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/contHash/contHash.o" afterPath="$PROJECT_DIR$/contHash/contHash.o" />
+      <change beforePath="$PROJECT_DIR$/contHash/containmentHash" afterPath="$PROJECT_DIR$/contHash/containmentHash" />
+      <change beforePath="$PROJECT_DIR$/contHash/include/BloomFilter.h" afterPath="$PROJECT_DIR$/contHash/include/BloomFilter.h" />
+      <change beforePath="$PROJECT_DIR$/test/GenAssembly" afterPath="$PROJECT_DIR$/test/GenAssembly" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,10 +54,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contHash.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="contHash.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/GenAssembly/contHash/contHash.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="593">
+            <state relative-caret-position="845">
               <caret line="181" column="23" lean-forward="false" selection-start-line="181" selection-start-column="23" selection-end-line="181" selection-end-column="23" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -61,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="query.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="query.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/GenAssembly/contHash/query.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="611">
-              <caret line="127" column="16" lean-forward="false" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="16" />
+            <state relative-caret-position="281">
+              <caret line="106" column="9" lean-forward="false" selection-start-line="106" selection-start-column="9" selection-end-line="106" selection-end-column="9" />
               <folding>
                 <element signature="e#54#72#0" expanded="true" />
               </folding>
@@ -117,32 +122,6 @@
               <item name="GenAssembly" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="GenAssembly" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="GenAssembly" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="GenAssembly" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GenAssembly" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="GenAssembly" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="GenAssembly" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GenAssembly" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="GenAssembly" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="GenAssembly" type="462c0819:PsiDirectoryNode" />
-              <item name="contHash" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GenAssembly" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
-              <item name="GenAssembly" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="GenAssembly" type="462c0819:PsiDirectoryNode" />
-              <item name="contHash" type="462c0819:PsiDirectoryNode" />
-              <item name="include" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -184,9 +163,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="878" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -287,22 +265,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/GenAssembly/contHash/contHash.cpp">
+    <entry file="file://$PROJECT_DIR$/test/GenAssembly/contHash/query.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="181" column="23" lean-forward="false" selection-start-line="181" selection-start-column="23" selection-end-line="181" selection-end-column="23" />
+        <state relative-caret-position="281">
+          <caret line="106" column="9" lean-forward="false" selection-start-line="106" selection-start-column="9" selection-end-line="106" selection-end-column="9" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#54#72#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/GenAssembly/contHash/query.cpp">
+    <entry file="file://$PROJECT_DIR$/test/GenAssembly/contHash/contHash.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="611">
-          <caret line="127" column="16" lean-forward="false" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="16" />
+        <state relative-caret-position="845">
+          <caret line="181" column="23" lean-forward="false" selection-start-line="181" selection-start-column="23" selection-end-line="181" selection-end-column="23" />
           <folding>
-            <element signature="e#54#72#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
