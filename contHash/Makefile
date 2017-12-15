@@ -1,6 +1,6 @@
 
 ContainmentHash: contHash.o BloomFilter.o MurmurHash3.o MinhashNaive.o
-	g++ -std=c++0x contHash.o BloomFilter.o MurmurHash3.o MinhashNaive.o -o containmentHash
+	g++ -g -std=c++0x contHash.o BloomFilter.o MurmurHash3.o MinhashNaive.o -o containmentHash
 
 contHash.o: contHash.cpp
 	g++ -std=c++0x -c contHash.cpp

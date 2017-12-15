@@ -11,11 +11,17 @@
 typedef unsigned long long int uint64_t;
 using namespace std;
 
+ofstream myfile;
+
+float trueJaccard;
+
+
+
 //vars for minHash count estimator
 uint64_t prime = 9999999999971UL;
 uint64_t kSize = 20;
-uint64_t h = 200;
-double p = 0.001;
+uint64_t h = 1000;
+double p = 0.01;
 string l,s,line;
 float jaccardIndex(string a,string b)
 {
@@ -134,8 +140,8 @@ int containHash()
 		}
 	}
 
-		cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
-		cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
+		//cout<<"String1 Size:"<<l.length()<<" "<<bSize<<endl;
+		//cout<<"String2 Size:"<<s.length()<<" "<<sizeSmallStr<<endl;
 	//	cout<<"K-Mer Size\t\t: "<<kSize<<endl;
 	//	cout<<"Hash Count\t\t: "<<h<<endl;
 	intersectionCount-=(uint64_t)floor(p*h);
@@ -145,42 +151,103 @@ int containHash()
 	//	cout<<"Containment Est.\t: "<<containmentEst<<endl;
 
 	float jaccardEst = (sizeSmallStr * containmentEst) / (sizeSmallStr + bSize - sizeSmallStr * containmentEst);
-	cout<<"Jaccard Est. by containmentHash: "<<jaccardEst<<endl;
-	float trueJaccard = jaccardIndex(l,s);
-	cout<<"Actual Jaccard Est.: "<<trueJaccard<<endl;
-	float relError = abs(jaccardEst-trueJaccard)/trueJaccard;
-	cout<<"Relative Error of containment hash: "<<setprecision(6)<<relError<<endl;
-	cout<<"------------------------------------"<<endl;
+    //float trueJaccard = jaccardIndex(l,s);
+//    cout<<jaccardEst<<" "<<trueJaccard<<endl;
+//
+//    cout<<"Actual Jaccard Est.: "<<trueJaccard<<endl;
+    float relError = abs(jaccardEst-trueJaccard)/trueJaccard;
+    myfile<<" "<<setprecision(6)<<relError<<endl;
+//    //cout<<"------------------------------------"<<endl;
 	//    ofstream in("output.csv");
 
 	return 0;
 }
 int main(int argc,char* argv[]){
-	if(argc>1){
-		kSize = atoi(argv[1]);
-		h = atoi(argv[2]);
-	}
-	ifstream input("input.txt"); 
-	while( std::getline( input, line ) ){
-		if( line.empty() || line[0] == '>' ){
-			continue;
-		}   
-		else{
-			if(l.empty()){
-				l = line;
-			}   
-			else{
-				s = line;
-			}   
-		}   
-	}   
-	MinhashNaive *m1 = new MinhashNaive(h,9999999999971UL);
-	m1->computeHashedKmers(l,kSize);
-	vector<uint64_t> sk1 = m1->getSketch();
-	MinhashNaive *m2 = new MinhashNaive(h,9999999999971UL);
-	m2->computeHashedKmers(s,kSize); 
-	vector<uint64_t> sk2 = m2->getSketch();
-	cout<<"KmerSize: "<<kSize<<endl<<"Number of Hash Values: "<<h<<endl<<"Minhash similarity: "<<::jaccardindex(sk1,sk2)<<endl;
-	containHash();
+    
+    myfile.open ("example.txt");
+    
+    //    if(argc>1){
+    //        kSize = atoi(argv[1]);
+    //        h = atoi(argv[2]);
+    //    }
+    //    ifstream input("input.txt");
+    //    while( std::getline( input, line ) ){
+    //        if( line.empty() || line[0] == '>' ){
+    //            continue;
+    //        }
+    //        else{
+    //            if(l.empty()){
+    //                l = line;
+    //            }
+    //            else{
+    //                s = line;
+    //            }
+    //        }
+    //    }
+    
+    //cin>>l>>s;
+    char c[]={'A','C','T','G'};
+    
+    string t;
+    l=s=t="";
+    int k = 50;
+    
+    int j=0;
+    
+    l=s=t="";
+    
+    for(int i=0;i<10000;i++)
+    {
+        l+=c[rand()%4];
+    }
+    for(int i=0;i<10000;i++)
+    {
+        s+=c[rand()%4];
+    }
+    
+    for(int i=0;i<k;i++)
+    {
+        t+=c[rand()%4];
+    }
+    l+=s;
+    l+=t;
+    s+=t;
+    
+    trueJaccard = jaccardIndex(l,s);
+   
+    
+    while(j<100000)
+    {
+        
+        cout<<j<<endl;
+        MinhashNaive *m1 = new MinhashNaive(h,9999999999971UL);
+        m1->computeHashedKmers(l,kSize);
+        vector<uint64_t> sk1 = m1->getSketch();
+        MinhashNaive *m2 = new MinhashNaive(h,9999999999971UL);
+        m2->computeHashedKmers(s,kSize);
+        vector<uint64_t> sk2 = m2->getSketch();
+        //cout<<"KmerSize: "<<kSize<<endl<<"Number of Hash Values: "<<h<<endl<<"Minhash similarity: "<<::jaccardindex(sk1,sk2)<<endl;
+        
+        //cout<<jaccardindex(sk1,sk2)<<" ";
+        
+        float jaccardEst = jaccardindex(sk1,sk2);
+        
+        //    cout<<jaccardEst<<" "<<trueJaccard<<endl;
+        //
+        //    cout<<"Actual Jaccard Est.: "<<trueJaccard<<endl;
+        float relError = abs(jaccardEst-trueJaccard)/trueJaccard;
+        myfile<<h<<" "<<setprecision(6)<<relError;
+        
+        containHash();
+        
+        if(j%1==0)h+=1;
+        
+        j+=1;
+        
+    }
+    
+    //    cout<<l<<endl;
+    //    cout<<s<<endl;
+    //
 
 }
